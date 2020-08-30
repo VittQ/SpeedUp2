@@ -71,7 +71,7 @@ int main()
 	thread2.join();
 	
 	//Sem Thread
-	//TestaPrimo4(p,0);									//Função sem thread
+	//TestaPrimo4(p,0);					//Função sem thread
 
 	auto end = std::chrono::steady_clock::now();		//Final do contador
 	milliseconds tempoexec = duration_cast<milliseconds>(end - start);
