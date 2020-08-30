@@ -1,0 +1,83 @@
+
+
+
+// Victor Antonio Silva de Queiroga
+// RA: 22117054-1
+
+
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include <chrono>
+#include <thread>
+
+
+using namespace std;
+using namespace chrono;
+int soma = 0;			
+int primos = 0;	//variavel primos para controlar o for
+
+void TestaPrimo4(int n, int f) {
+	
+	for (int i = n; i > f; i--) {
+		int EhPrimo,
+			d = 3;
+		if (n <= 1 || (n != 2 && n % 2 == 0) || (n % 6 != 1 && n % 6 != 5))
+			EhPrimo = 0;
+		else
+			EhPrimo = 1;
+		while (EhPrimo && d <= n / 2) {
+			if (n % d == 0)
+				EhPrimo = 0;
+			d = d + 2;
+		}
+
+		//If para controlar a variavel soma e saber quantos primos foram encontrados
+		if (EhPrimo != 0) {
+			soma = soma + n;	// 20044239
+			printf("\n %d - %d", primos+1, n);	
+			primos++;
+		}
+		else if (primos == 221) {
+			i = 0;
+		}
+		
+		n--;
+
+	}
+	
+}
+
+
+
+//22117054 - 1
+// aaa = 221
+// bbb = 170
+// ccc = 541
+
+int main()
+{
+	int a = 221; // valor para aaa
+	int b = 170; // valor para bbb
+	int c = 541; // valor para ccc
+	int p = b * c; // = 91.970
+
+	auto start = std::chrono::steady_clock::now();		//Início do contador
+	
+	//Com thread  
+	std::thread thread1(TestaPrimo4, p, (p / 2));		//Chamando primeira thread
+	thread1.join();
+	std::thread thread2(TestaPrimo4, ((p / 2) - 1), 0);	//Chamando segunda thread
+	thread2.join();
+	
+	//Sem Thread
+	//TestaPrimo4(p,0);									//Função sem thread
+
+	auto end = std::chrono::steady_clock::now();		//Final do contador
+	milliseconds tempoexec = duration_cast<milliseconds>(end - start);
+
+
+	cout << "\n\nA soma foi: " << soma << endl;
+	cout <<  "\nTempo de execucao: " << tempoexec.count() << "ms" << endl ;
+}
+
